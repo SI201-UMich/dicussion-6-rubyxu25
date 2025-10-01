@@ -90,11 +90,11 @@ class PollReader():
         max_trump = max(self.data_dict['Trump result'])
 
         if max_harris > max_trump:
-            return f"Harris, {max_harris}"
+            return f"Harris, {max_harris:.1%}"
         elif max_trump > max_harris:
-            return f"Trump, {max_trump}"
+            return f"Trump, {max_trump:.1%}"
         else:
-            return f"EVEN, {max_harris}"
+            return f"EVEN, {max_harris:.1%}"
         
 
 
@@ -131,7 +131,22 @@ class PollReader():
             tuple: A tuple containing the net change for Harris and Trump, in that order.
                    Positive values indicate an increase, negative values indicate a decrease.
         """
-        pass
+        harris = self.data_dict['Harris result']
+        trump = self.data_dict['Trump result']
+
+        harris = list(reversed(harris))
+        trump = list(reversed(trump))
+        
+        earliest_harris = sum(harris[:30]) / 30
+        earliest_trump = sum(trump[:30]) / 30
+
+        latest_harris = sum(harris[-30:]) / 30
+        latest_trump = sum(trump[-30:]) / 30
+
+        harris_change = latest_harris - earliest_harris
+        trump_change = latest_trump - earliest_trump
+
+        return harris_change, trump_change
 
 
 class TestPollReader(unittest.TestCase):
