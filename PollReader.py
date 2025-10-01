@@ -134,14 +134,12 @@ class PollReader():
         harris = self.data_dict['Harris result']
         trump = self.data_dict['Trump result']
 
-        harris = list(reversed(harris))
-        trump = list(reversed(trump))
-        
-        earliest_harris = sum(harris[:30]) / 30
-        earliest_trump = sum(trump[:30]) / 30
 
-        latest_harris = sum(harris[-30:]) / 30
-        latest_trump = sum(trump[-30:]) / 30
+        earliest_harris = sum(harris[-30:]) / 30
+        earliest_trump = sum(trump[-30:]) / 30
+
+        latest_harris = sum(harris[:30]) / 30
+        latest_trump = sum(trump[:30]) / 30
 
         harris_change = latest_harris - earliest_harris
         trump_change = latest_trump - earliest_trump
